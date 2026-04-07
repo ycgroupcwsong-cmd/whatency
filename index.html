@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENCY CAM Library - Full Edition</title>
+    <style>
+        :root {
+            --bg-dark: #1a1c23;
+            --box-bg: #262934;
+            --text-main: #e0e0e0;
+            --accent-cyan: #00f2fe;
+            --border-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #7367f0 100%);
+        }
+
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            display: flex; flex-direction: column; align-items: center; padding: 40px 20px;
+            margin: 0;
+        }
+
+        h2 { margin-bottom: 30px; font-weight: 700; letter-spacing: -1px; text-align: center; }
+
+        /* 탭 버튼 스타일 - 5개 분류 대응 */
+        .tab-container { 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; 
+            margin-bottom: -2px; z-index: 1; width: 100%; max-width: 900px;
+        }
+        .tab-button { 
+            padding: 12px 18px; border: none; cursor: pointer; 
+            background: #343848; color: #888; font-weight: bold;
+            border-radius: 8px 8px 0 0; transition: 0.3s; font-size: 0.9rem;
+        }
+        .tab-button:hover { background: #3d4255; color: #fff; }
+        .tab-button.active { 
+            background: var(--box-bg); color: var(--accent-cyan); 
+            box-shadow: 0 -4px 10px rgba(0, 242, 254, 0.1);
+        }
+
+        /* 그라데이션 테두리 박스 */
+        .content-wrapper {
+            position: relative; width: 100%; max-width: 900px;
+            padding: 2px; /* 테두리 두께 */
+            background: var(--border-gradient);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .tab-content { 
+            display: none; background: var(--box-bg); 
+            padding: 30px; border-radius: 10px; min-height: 250px;
+        }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* 테이블 스타일 */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 16px; text-align: left; border-bottom: 1px solid #3d4255; }
+        th { color: var(--accent-cyan); width: 25%; font-size: 0.85em; font-weight: 600; }
+        td { line-height: 1.5; font-size: 0.95rem; }
+        tr:last-child td, tr:last-child th { border-bottom: none; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .tab-button { flex: 1 1 30%; font-size: 0.8rem; padding: 10px; }
+            th { width: 35%; }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>ENCY CAM 연동 가능 장비 라이브러리</h2>
+
+    <div class="tab-container">
+        <button class="tab-button active" onclick="openTab(event, 'milling')">CNC 밀링</button>
+        <button class="tab-button" onclick="openTab(event, 'lathe')">선반/복합</button>
+        <button class="tab-button" onclick="openTab(event, 'swiss')">스위스타입</button>
+        <button class="tab-button" onclick="openTab(event, 'robot')">산업용로봇</button>
+        <button class="tab-button" onclick="openTab(event, 'cobot')">협동로봇</button>
+    </div>
+
+    <div class="content-wrapper">
+        <div id="milling" class="tab-content active">
+            <table>
+                <tr><th>DN Solutions</th><td>DNM 4500/5700, VCF 850L, DVF 5000/6500/8000</td></tr>
+                <tr><th>현대위아</th><td>F400/500, KF5600, XF6300, Hi-MOLD 시리즈</td></tr>
+                <tr><th>DMG MORI</th><td>DMU 50/65/85 MonoBLOCK, NMV 3000, CMX 시리즈</td></tr>
+                <tr><th>HAAS</th><td>VF-2, VF-3, VF-4, UMC-750/1000</td></tr>
+                <tr><th>Mazak</th><td>VCN-530C, Variaxis C-600, VC-Ez 시리즈</td></tr>
+            </table>
+        </div>
+
+        <div id="lathe" class="tab-content">
+            <table>
+                <tr><th>DN Solutions</th><td>Puma 2100/2600/3100, Lynx 2100/2200, SMX 2600/3100</td></tr>
+                <tr><th>현대위아</th><td>HD2200/2600, LM2000/2500, SE2200</td></tr>
+                <tr><th>Mazak</th><td>Integrex i-100/200/300/400, Quick Turn 시리즈</td></tr>
+                <tr><th>Mori Seiki</th><td>NLX 2500, NTX 1000/2000</td></tr>
+            </table>
+        </div>
+
+        <div id="swiss" class="tab-content">
+            <table>
+                <tr><th>Hanwha</th><td>XD12/16/20/26/32/38 (H/II/III 시리즈)</td></tr>
+                <tr><th>Star</th><td>SR-20J, SR-32J, SB 시리즈 등 전 모델</td></tr>
+                <tr><th>Citizen</th><td>Cincom L20, M32, A20 시리즈</td></tr>
+                <tr><th>Tsugami</th><td>B012, B020, S20 시리즈 등</td></tr>
+            </table>
+        </div>
+
+        <div id="robot" class="tab-content">
+            <table>
+                <tr><th>KUKA</th><td>KR 6/10/16 (Agilus), KR 30/60, KR 150/210/240</td></tr>
+                <tr><th>Fanuc</th><td>LR Mate 200iD, M-10iD/20iD, R-2000iC 시리즈</td></tr>
+                <tr><th>ABB</th><td>IRB 120, IRB 1600/2600, IRB 4600/6700</td></tr>
+                <tr><th>Yaskawa</th><td>GP7, GP12, GP25, MH 시리즈</td></tr>
+            </table>
+        </div>
+
+        <div id="cobot" class="tab-content">
+            <table>
+                <tr><th>Universal Robots</th><td>UR3, UR5, UR10, UR16 (e-Series 포함)</td></tr>
+                <tr><th>Doosan</th><td>M0609, M1013, H2017, A-Series</td></tr>
+                <tr><th>Rainbow</th><td>RB5-850, RB10-1300</td></tr>
+                <tr><th>Techman</th><td>TM5, TM12, TM14 시리즈</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+
+            const buttons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+</body>
+</html>
